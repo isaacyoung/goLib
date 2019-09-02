@@ -157,6 +157,20 @@ func main() {
 	includeFile := []string{".java"}
 	excludePath := []string{".svn", ".idea", "unifiedcenter-web-manager", "target", "unifiedcenter-generate"}
 	excludeFile := []string{"Test.java"}
+	end := "\r\n"
+
+	reportFile := "F:\\dir\\dif.txt"
+	if _, err := os.Stat(reportFile); err != nil {
+		if os.IsExist(err) {
+			os.Remove(reportFile)
+		}
+	}
+	currFile, err := os.Create(reportFile)
+	defer currFile.Close()
+	if err != nil {
+		println(err)
+		return
+	}
 
 	fromFiles, err := GetProjectFiles(fromProject, includePath, includeFile, excludePath, excludeFile)
 	if err != nil {
@@ -170,17 +184,18 @@ func main() {
 		return
 	}
 
-	println("not found_______________________________________________________________________")
+	currFile.WriteString("not found_______________________________________________________________________" + end)
 	fileMap := make(map[string]string)
 	for _, fromFile := range fromFiles {
 		targetFile := getTargetFile(fromFile, targetFiles)
 		if targetFile == "" {
-			println(fromFile)
+			currFile.WriteString(fromFile + end)
 		} else {
 			fileMap[fromFile] = targetFile
 		}
 	}
 
+	currFile.WriteString("_______________________________________________________________________" + end)
 	println("_______________________________________________________________________")
 
 	for k, v := range fileMap {
@@ -223,12 +238,13 @@ func main() {
 		}
 
 		if diff {
-			println()
-			println("#################################################")
-			println(k)
+
+			currFile.WriteString(end)
+			currFile.WriteString("#################################################" + end)
+			currFile.WriteString(k + end)
 
 			for _, block := range errorList {
-				println(block)
+				currFile.WriteString(block + end)
 			}
 		}
 	}
