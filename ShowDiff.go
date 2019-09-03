@@ -34,13 +34,13 @@ func doShow(w http.ResponseWriter, r *http.Request) {
 }
 
 func showHtmlHead(w http.ResponseWriter) {
-	_, _ = fmt.Fprintf(w, "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">")
-	_, _ = fmt.Fprintf(w, "<html xmlns=\"http://www.w3.org/1999/xhtml\">")
-	_, _ = fmt.Fprintf(w, "<body>")
+	fmt.Fprintf(w, "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">")
+	fmt.Fprintf(w, "<html xmlns=\"http://www.w3.org/1999/xhtml\">")
+	fmt.Fprintf(w, "<body>")
 }
 
 func showHtmlFloor(w http.ResponseWriter) {
-	_, _ = fmt.Fprintf(w, "</body>")
+	fmt.Fprintf(w, "</body>")
 }
 
 func showData(w http.ResponseWriter, data string) {
@@ -52,7 +52,7 @@ func showData(w http.ResponseWriter, data string) {
 	} else {
 		html = data + "<br/>"
 	}
-	_, _ = fmt.Fprintf(w, html)
+	fmt.Fprintf(w, html)
 }
 
 func main() {
