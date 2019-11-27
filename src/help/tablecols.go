@@ -24,6 +24,8 @@ func main() {
 
 	arrStr := strings.Split(cols, "\n")
 	for _, col := range arrStr {
+		col = col[0 : len(col)-1]
+		col = strings.ReplaceAll(col, "'", "")
 		rows := strings.Split(col, " ")
 		colName := strings.Trim(rows[0], "\t")
 		subName := strings.Split(colName, "_")
@@ -40,7 +42,7 @@ func main() {
 			}
 		}
 
-		colComment := rows[4]
+		colComment := strings.Join(rows[4:], " ")
 		fmt.Printf("%-20s %-20s %-20s\n", colName, javaName, colComment)
 	}
 
